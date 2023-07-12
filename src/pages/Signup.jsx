@@ -29,11 +29,11 @@ const Signup = () => {
           console.log(res);
           const response = await axios.post('http://localhost:5000/signup', {name:res1.displayName, email:res1.email, role:role})
           console.log(response.data)
-          dispatch(addUser({
-              name: res1.displayName,
-              email: res1.email,
-              role:role,
-            }));
+        //   dispatch(addUser({
+        //       name: res1.displayName,
+        //       email: res1.email,
+        //       role:role,
+        //     }));
             navigate('/profile');
         //   const q = query(collection(db, "users"), where("uid", "==", res1.uid));
         //   console.log(q);

@@ -23,6 +23,13 @@ const Login = () => {
             alert("Invalid Credentials")
         }
         else{
+            console.log(res.data)
+            dispatch(addUser({
+                name:res.data.name,
+                email:res.data.email,
+                role:res.data.role,
+                // password:res.data.password
+            }))
             alert("Logged In Successfully")
             navigate('/profile')
         }

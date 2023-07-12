@@ -18,8 +18,11 @@ export const userSlice = createSlice({
             state.users = action.payload
             state.isLoggedIn=true
             console.log(state.users);
+        },
+        removeUser:(state)=>{
+            state.users = initialState.users;
         }
     }
 })
-export const {addUser} = userSlice.actions;
+export const {addUser, removeUser} = userSlice.actions;
 export default userSlice.reducer;
