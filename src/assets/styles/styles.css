@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.login-signup-page {
+    background-color: #f7f6f1;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-signup-container {
+    padding: 20px;
+    width: 500px;
+    border-radius: 10px;;
+    background-color: #fff;
+    box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.2);
+}
+
+.login-signup-input {
+    margin-top: 10px;
+    ;
+    border: 1px solid black;
+    height: 40px;
+}
+
+.google-login,
+.login-btn {
+    margin-top: 10px;
+    ;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    font-size: 25px;
+    padding-top: 0;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(to right, #232526 0%, #414345 51%, #232526 100%);
+    margin-bottom: 10px;;
+
+}
+
+.google-icon {
+    padding: 5px;
+    margin-top: 3px;
+}
+
+.login-text {
+    text-align: center;
+}
+.select-role{
+    padding-left:15px;
+}
+.navbar{
+    height:80px;
+    width:100vw;
+    background-color: #232526;
+    display:flex;
+    justify-content: center;
+    align-items: center;;
+}
+
+.search-navbar{
+    width:400px;
+    height:50px;
+    font-size: large;
+    color:#232526;
+}
+
+.nav{
+    width:80%;
+    display:flex;
+    justify-content: space-between;
+
+}
+.profile-btn-nav{
+    background-color: #fff;
+    border:none;
+    width:200px;
+    height:50px;
+    font-size: large;
+    font-weight: 600;
+    color:#232526;
+
+}
+.categories{
+    display:flex;
+    /* width:100%; */
+    justify-content: center;
+    color: #232526;
+    font-weight: 600;;
+}
+.menu-categories{
+    width:100%;
+    display: flex;
+    justify-content: center;
+    font-size: medium;
+    /* padding:5px; */
+}
+.item-container{
+    width:100vw;
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.items{
+    display:flex;
+    /* height:500px;
+    width:1000px; */
+    justify-content: space-evenly;
+    /* flex-direction: column;
+    margin: 20px;;
+    flex-wrap: wrap; */
+    flex-wrap: wrap;;
+}
+
+.item{
+    height: 400px;
+    width:400px;
+    border:1px solid black;
+    width: 100%;
+    &:hover{
+        cursor: pointer;
+    }
+}
+.item-h1{
+    text-align: center;
+}
