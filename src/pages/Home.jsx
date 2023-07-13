@@ -12,8 +12,10 @@ const Home = () => {
   const user = useSelector(state=>state.user.users)
   console.log(user)
 
-  function onClick() {
-    console.log("first");
+  function onClick(e) {
+    console.log(e.key)
+    setFilteredProducts(products?.filter(x=>x.category[1].includes(e.key)))
+
   }
 
 
