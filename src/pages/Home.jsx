@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from "react";
-import {Menu} from "antd";
-import items from "../utils/Categories";
+import {Carousel, Divider} from "antd";
 import {useSelector} from  'react-redux';
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import ListingProducts from "../components/ListingProducts";
 
+
+
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [showCarousel, setShowCarousel] = useState(true);
   const user = useSelector(state=>state.user.users)
-  console.log(user)
 
-  function onClick(e) {
-    console.log(e.key)
-    setFilteredProducts(products?.filter(x=>x.category[1].includes(e.key)))
-
-  }
-
+ 
+  const onChange = (currentSlide) => {
+    console.log(currentSlide);
+  };
 
   useEffect(() => {
     async function run() {
@@ -28,22 +27,30 @@ const Home = () => {
     }
     run();
   }, []);
-  console.log(items);
 
-  console.log(products)
 
   return (
-    <div>
-      <Navbar products={products} setFilteredProducts={setFilteredProducts}/>
-
-      <div className="categories">
-        <Menu
-          onClick={onClick}
-          className="menu-categories"
-          mode="horizontal"
-          items={items}
-        />
+    <div className="home-container">
+      <Navbar products={products} setShowCarousel={setShowCarousel} setFilteredProducts={setFilteredProducts}/>
+      <Carousel className="carousel" style={showCarousel===true? {display: "block"}: {display:"none"}} dotPosition="bottom" afterChange={onChange} autoplay >
+      <div>
+        <img className="slider-image" src={require('../assets/images/sliderimage1.png')} alt="" />
       </div>
+      <div>
+      <img  className="slider-image" src={require('../assets/images/sliderimage2.png')} alt="" />
+
+      </div>
+      <div>
+      <img  className="slider-image" src={require('../assets/images/sliderimage3.png')} alt="" />
+
+      </div>
+      <div>
+      <img  className="slider-image" src={require('../assets/images/sliderimage4.png')} alt="" />
+
+      </div>
+    </Carousel>
+    <Divider/>
+
 
       <ListingProducts products={filteredProducts}/>
       
@@ -52,3 +59,14 @@ const Home = () => {
 };
 
 export default Home;
+
+
+
+      {/* <div className="categories">
+        <Menu
+          onClick={onClick}
+          className="menu-categories"
+          mode="horizontal"
+          items={items}
+        />
+      </div> */}

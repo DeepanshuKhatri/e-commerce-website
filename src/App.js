@@ -2,6 +2,7 @@ import React from 'react'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Signup from './pages/Signup'
+import ShowProduct from './pages/ShowProduct'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Profile from './pages/Profile'
 import YourProducts from './pages/YourProducts'
@@ -22,6 +23,7 @@ const App = () => {
       <Route path='/' element={<Home/>}/>
       <Route path='/myProducts' element={<YourProducts/>}/>
     <Route path='/cart' element={<Cart/>}/>
+    <Route path='/product' element={<ShowProduct/>}/>
         </>
       }
       <Route path='*' element={<Login/>}/>

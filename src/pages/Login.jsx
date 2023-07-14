@@ -31,7 +31,7 @@ const Login = () => {
                 // password:res.data.password
             }))
             alert("Logged In Successfully")
-            navigate('/profile')
+            navigate('/')
         }
         console.log("Finish")
         console.log(email)
