@@ -8,6 +8,7 @@ import Profile from './pages/Profile'
 import YourProducts from './pages/YourProducts'
 import Cart from './pages/Cart'
 import { useSelector } from 'react-redux'
+import Order from './pages/Order'
 
 const App = () => {
   const user = useSelector(state=>state.user.users)
@@ -24,6 +25,8 @@ const App = () => {
       <Route path='/myProducts' element={<YourProducts/>}/>
     <Route path='/cart' element={<Cart/>}/>
     <Route path='/product' element={<ShowProduct/>}/>
+    <Route path='/orders' element={<Order/>}/>
+
         </>
       }
       <Route path='*' element={<Login/>}/>

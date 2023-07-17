@@ -7,50 +7,18 @@ import { removeUser } from '../redux/slice/user.slice'
 import items from "../utils/Categories";
 
 
-const Navbar = ({products, setShowCarousel, setFilteredProducts}) => {
-  // const [filteredProducts, setFilteredProducts] = useState([]);
-  const user = useSelector(state=>state.user.users)
-  const dispatch = useDispatch();
-
-  function check(e){
-    setFilteredProducts(products?.filter(x=>x.category[1].includes(e.target.value)))
-    if(e.target.value == ""){
-      setShowCarousel(true)
-    }else{
-
-      setShowCarousel(false)
-    }
-  }
-  function logout(e){
-    dispatch(removeUser())
-  }
-  function onClick(){
-    console.log("first")
-  }
-  function onClick(e) {
-    console.log(e.key)
-    setFilteredProducts(products?.filter(x=>x.category[1].includes(e.key)))
-    setShowCarousel(false)
-
-  }
-
-    const navigate = useNavigate();
-    
+const AdminNavbar = () => {
+    const navigate = useNavigate()
   return (
     <div>
-
-
-
-
-
-      <div className="navbar">
+        <div className="navbar">
         <div className='navbar-left'>
           <div className="navbar-logo">
             <img src={require('../assets/images/myntra-logo-2.png')} onClick={()=>navigate('/')} className='myntra-logo' alt="asdfds" />
           </div>
 
 
-          <div className="categories">
+          {/* <div className="categories">
           <Menu
           onClick={onClick}
           width={1000}
@@ -76,19 +44,20 @@ const Navbar = ({products, setShowCarousel, setFilteredProducts}) => {
         <div className="page" onClick={()=>navigate('/orders')}>
         <img className='bag-icon-navbar' src={require('../assets/images/shopping-bag.png')} alt="" />
         Orders
-        </div>
-        {user.role=="vendor" && 
+        </div> */}
+        {/* {user.role=="vendor" && 
         <div className="page"  onClick={()=>navigate('/myProducts')}>
         <img className='bag-icon-navbar' src={require('../assets/images/shopping-bag.png')} alt="" />
         My Products
         </div>
-  }
-        <div className="page" onClick={logout}>
+  } */}
+        {/* <div className="page" onClick={logout}>
         <img className='bag-icon-navbar' src={require('../assets/images/shopping-bag.png')} alt="" />
         Logout
         </div>
         
         </div>
+        </div> */}
         </div>
 
       </div>
@@ -96,20 +65,4 @@ const Navbar = ({products, setShowCarousel, setFilteredProducts}) => {
   )
 }
 
-export default Navbar
-
-
-        {/* <div className="navbar">
-        <nav className="nav">
-          <Input suffix={<SearchOutlined />} onChange={check} className="search-navbar" />
-          <Button
-            onClick={() => navigate("/profile")}
-            className="profile-btn-nav"
-          >
-            Profile
-          </Button>
-          <Button onClick={()=>navigate('./cart')}   className="profile-btn-nav">Cart</Button>
-          <Button onClick={logout} className="profile-btn-nav">Log Out</Button>
-          {user.role=="vendor" && <Button onClick={()=>navigate('./myProducts')} className="profile-btn-nav">Your Products</Button>}
-        </nav>
-      </div> */}
+export default AdminNavbar

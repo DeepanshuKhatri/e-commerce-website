@@ -19,10 +19,13 @@ const Profile = () => {
 
     }
   return (
-    <div>
+    <div >
         <Navbar/>
 
+        <div className='profile-form'>
+
         <Form 
+        className='profile-container'
         labelCol={{
             span: 5,
           }}
@@ -40,7 +43,7 @@ const Profile = () => {
                             },
                         ]}
             label="name">
-                <Input  defaultValue={name} onChange={e=>setName(e.target.value)}/>
+                <Input  className='profile-inp'  defaultValue={name} onChange={e=>setName(e.target.value)}/>
             </Form.Item>
             <Form.Item initialValue={email} rules={[
                             {
@@ -48,7 +51,7 @@ const Profile = () => {
                                 message: 'Please ennter your name',
                             },
                         ]} name='email' label="email">
-                <Input type='email' value={email} defaultValue={email}  onChange={e=>setEmail(e.target.value)}/>
+                <Input className='profile-inp'  type='email' value={email} defaultValue={email}  onChange={e=>setEmail(e.target.value)}/>
             </Form.Item>
             <Form.Item  initialValue={address}   rules={[
                             {
@@ -56,13 +59,14 @@ const Profile = () => {
                                 message: 'Please ennter your name',
                             },
                         ]} name="address" label="address">
-                <Input defaultValue={address}  onChange={e=>setAddress(e.target.value)}/>
+                <Input className='profile-inp' defaultValue={address}  onChange={e=>setAddress(e.target.value)}/>
             </Form.Item>
             <Form.Item>
                 <Button type='primary' htmlType='submit'>Save</Button>
             </Form.Item>
             
         </Form>
+        </div>
         
     </div>
   )

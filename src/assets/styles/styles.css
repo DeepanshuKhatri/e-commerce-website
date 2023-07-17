@@ -92,6 +92,30 @@
     width: 20px;
     height: 16px;
 }
+
+.cart-navbar{
+    height:80px;
+    /* width:100%; */
+    padding: 10px 20px  0 20px;
+    background-color: #fff;
+    /* box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.2); */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(5, 5, 5, 0.09);
+}
+
+
+.cart-navbar-center{
+    display: flex;
+    width:400px;
+    justify-content: space-between;
+    font-weight: 600;
+    color:#414345
+}
+
+
+
 .pages{
     display: flex;
     width: 400px;
@@ -117,7 +141,10 @@
 }
 .myntra-logo{
     height:35px;
-    margin: auto 80px;;
+    margin: auto 80px;
+    &:hover{
+        cursor: pointer;
+    }
 }
 
 
@@ -274,7 +301,36 @@ padding-top: 0;
 }
 .cart-container{
     display:flex;
+    /* margin-top: 100px;; */
 }
+
+
+
+
+.cart-details{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 60%;
+    height: 100vh;
+    /* border-right: 1px solid #414345; */
+    border-right: 1px solid rgba(5, 5, 5, 0.09)
+}
+.mrp-details{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.place-order{
+    width:400px;
+    margin: 25px 20px;
+    /* background-color: brown; */
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
 .c-i{
     width:70%;
     justify-content: center;
@@ -354,8 +410,8 @@ padding-top: 0;
     margin-top: 5px;
     text-align: center;
 }
-.product-page-add-to-cart, .buy-now-btn{
-    width:48%;
+.product-page-add-to-cart{
+    width:100%;
     height: 55px;;
     font-size: large;
     font-weight: 600;
@@ -379,4 +435,110 @@ padding-top: 0;
 }
 .add-to-cart-icon{
     font-size: large;
+}
+
+.change-address{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:25px;
+    /* height:80px; */
+    width:65%;
+    border:1px solid rgba(5, 5, 5, 0.09);
+    border-radius: 5px;
+    margin: 25px 20px;
+}
+.current-address{
+    width:60%;
+}
+.change-address-btn{
+    background:transparent;
+    border: 1px solid rgb(243, 39, 93);
+    font-weight: 700;
+    border-radius: 4px;
+    height:45px;
+    width:150px;
+    color:rgb(243, 39, 93);
+    &:hover{
+        cursor: pointer;
+        background-color: rgb(242, 219, 224);
+    }
+}
+
+
+
+.showing-cart-items{
+    position: relative;
+    border:1px solid rgba(5, 5, 5, 0.09);
+    border-radius: 5px;
+    height:160px;
+    width:65%;
+    padding:20px;
+    margin: 15px 20px;
+    display: flex;
+
+}
+
+.cart-product-img{
+    margin-right: 20px;
+}
+
+.quantity-btn{
+    border:none;
+    padding:7px 10px;
+    &:hover{
+        cursor: pointer;
+    }
+}
+.cart-item-overview{
+    width:100%;
+}
+.remove-from-cart-btn{
+    background-color: transparent;
+    border:none;
+    font-size:x-large;
+    font-weight: 100;;
+    position: absolute;
+    right:10px;;
+    top:10px;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+/* .profile-container{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;;
+    width: 500px;
+} */
+
+.profile-form{
+    margin-top: 100px;
+    /* background-color: brown; */
+    height:100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.profile-inp{
+    width: 500px;;
+}
+
+.addresses{
+    display:flex;
+    justify-content: space-between;
+}
+.show-address{
+    border:1px solid black;
+    padding:5px 10px;
+    width:400px;
+    overflow: hidden;    
+    &:hover{
+        cursor: pointer;
+    }
 }

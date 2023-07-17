@@ -4,6 +4,7 @@ import {useSelector} from  'react-redux';
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import ListingProducts from "../components/ListingProducts";
+import AdminNavbar from "../components/AdminNavbar";
 
 
 
@@ -31,6 +32,13 @@ const Home = () => {
 
   return (
     <div className="home-container">
+      {
+        user.role==='admin'?
+        <>
+        <AdminNavbar/>
+        </>:
+        <>
+        
       <Navbar products={products} setShowCarousel={setShowCarousel} setFilteredProducts={setFilteredProducts}/>
       <Carousel className="carousel" style={showCarousel===true? {display: "block"}: {display:"none"}} dotPosition="bottom" afterChange={onChange} autoplay >
       <div>
@@ -54,6 +62,8 @@ const Home = () => {
 
       <ListingProducts products={filteredProducts}/>
       
+      </>
+    }
     </div>
   );
 };
