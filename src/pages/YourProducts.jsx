@@ -32,8 +32,8 @@ const YourProducts = () => {
   return (
     <div>
               <Navbar products={products} setFilteredProducts={setFilteredProducts}/>
-        <ListingProducts products={filteredProducts}/>
-        {user.role=="vendor" && <FloatButton onClick={showModal} icon={<PlusOutlined />} />}
+        <ListingProducts page="myProducts" products={filteredProducts}/>
+        {user.role!="customer" && <FloatButton onClick={showModal} icon={<PlusOutlined />} />}
       {isModalOpen && <AddProduct setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen}/>}
     </div>
   )

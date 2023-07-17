@@ -35,7 +35,7 @@ const Home = () => {
       {
         user.role==='admin'?
         <>
-        <AdminNavbar/>
+        <Navbar/>
         </>:
         <>
         
@@ -60,7 +60,7 @@ const Home = () => {
     <Divider/>
 
 
-      <ListingProducts products={filteredProducts}/>
+      <ListingProducts page="home" products={filteredProducts}/>
       
       </>
     }

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const ListingProducts = ({products}) => {
+const ListingProducts = ({products, page}) => {
   const navigate = useNavigate()
  
   return (
@@ -13,7 +13,7 @@ const ListingProducts = ({products}) => {
           {products &&
             products.map((item) => {
               
-              return <div onClick={()=>{navigate('/product', {state:{item:item}})}}><Lists  item={item}/></div>
+              return <div onClick={()=>{navigate('/product', {state:{item:item}})}}><Lists page={page} item={item}/></div>
             })}
         </div>
       

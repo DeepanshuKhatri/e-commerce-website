@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import {Input, Button, Menu} from 'antd'
-import { HeartOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons'
+import { HeartOutlined, SearchOutlined, UserOutlined, MailOutlined, SettingOutlined, AppstoreOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeUser } from '../redux/slice/user.slice'
-import items from "../utils/Categories";
 
 
 const AdminNavbar = () => {
+  const dispatch = useDispatch(); 
+  function logout(e){
+    dispatch(removeUser())
+  }
     const navigate = useNavigate()
   return (
     <div>
@@ -16,6 +19,19 @@ const AdminNavbar = () => {
           <div className="navbar-logo">
             <img src={require('../assets/images/myntra-logo-2.png')} onClick={()=>navigate('/')} className='myntra-logo' alt="asdfds" />
           </div>
+
+          {/* <Menu
+          // onClick={onClick}
+          width={1000}
+          height={600}
+          className="admin-menu"
+          mode="horizontal"
+          items={items}
+        />*/}
+        </div>
+        <div className="navbar-right">
+
+        </div> 
 
 
           {/* <div className="categories">
@@ -51,16 +67,16 @@ const AdminNavbar = () => {
         My Products
         </div>
   } */}
-        {/* <div className="page" onClick={logout}>
+        <div className="page" onClick={logout}>
         <img className='bag-icon-navbar' src={require('../assets/images/shopping-bag.png')} alt="" />
         Logout
         </div>
         
-        </div>
-        </div> */}
+        {/* </div> */}
+        {/* </div> */}
         </div>
 
-      </div>
+      {/* </div> */}
     </div>
   )
 }

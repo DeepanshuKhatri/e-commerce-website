@@ -44,12 +44,13 @@ const Navbar = ({products, setShowCarousel, setFilteredProducts}) => {
 
 
       <div className="navbar">
-        <div className='navbar-left'>
+        <div className={user.role=="admin" ? "admin-navbar-left":'navbar-left'}>
           <div className="navbar-logo">
             <img src={require('../assets/images/myntra-logo-2.png')} onClick={()=>navigate('/')} className='myntra-logo' alt="asdfds" />
           </div>
 
-
+    {
+      user.role!="admin" && 
           <div className="categories">
           <Menu
           onClick={onClick}
@@ -58,29 +59,62 @@ const Navbar = ({products, setShowCarousel, setFilteredProducts}) => {
           className="menu-categories"
           mode="horizontal"
           items={items}
-        />
+          />
           </div>
+        }
 
         </div>
-        <div className="navbar-right">
+        <div className={user.role=="admin"? "admin-navbar-right": "navbar-right"}>
+          {
+            user.role!="admin" &&
         <Input prefix={<SearchOutlined className='search-outlined'/>} onChange={check} placeholder='Search for products, brands and more' className="search-navbar" />
-        <div className="pages">
+          }
+        <div className={user.role=="admin"? "admin-pages": "pages"}>
         <div className="page" onClick={()=>navigate('/profile')}>
         <UserOutlined/>
         Profile
         </div>
+        {user.role!="admin" && 
         <div className="page" onClick={()=>navigate('/cart')}>
         <HeartOutlined/>
         Cart
         </div>
+        }
+
+
+
+
+          {user.role=="admin" ?
         <div className="page" onClick={()=>navigate('/orders')}>
-        <img className='bag-icon-navbar' src={require('../assets/images/shopping-bag.png')} alt="" />
+          
+          <img className='bag-icon-navbar' src={require('../assets/images/shopping-bag.png')} alt="" />
+          All Orders
+          </div>:
+        <div className="page" onClick={()=>navigate('/orders')}>
+
+          <img className='bag-icon-navbar' src={require('../assets/images/shopping-bag.png')} alt="" />
         Orders
         </div>
+        }
         {user.role=="vendor" && 
         <div className="page"  onClick={()=>navigate('/myProducts')}>
         <img className='bag-icon-navbar' src={require('../assets/images/shopping-bag.png')} alt="" />
         My Products
+        </div>
+  }
+  {user.role=="admin"
+  && 
+  <div className="page"  onClick={()=>navigate('/allProducts')}>
+        <img className='bag-icon-navbar' src={require('../assets/images/shopping-bag.png')} alt="" />
+        All Products
+        </div>
+  }
+
+  {user.role=="admin"
+  && 
+  <div className="page"  onClick={()=>navigate('/vendors')}>
+        <img className='bag-icon-navbar' src={require('../assets/images/shopping-bag.png')} alt="" />
+        Vendors
         </div>
   }
         <div className="page" onClick={logout}>
