@@ -244,12 +244,11 @@ padding-top: 0;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin-top: 80px;
 }
 
 
 .items{
-    margin-top: 30px;
+    /* margin-top: 30px; */
     width: 80%;
     display:flex;
     justify-content: space-evenly;
@@ -404,8 +403,14 @@ padding-top: 0;
 }
 
 .product-page-image{
-    height: 48%;
-    width: 48%;
+    height: 45%;
+    width: 45%;
+    padding: 5px;
+    /* &:hover{
+        height:60%;
+        width: 60%;;
+    } */
+    /* border:1px solid black */
 }
 .product-images{
     display: flex;
@@ -488,18 +493,28 @@ padding-top: 0;
     }
 }
 
+.show-cart-item{
 
-
-.showing-cart-items{
     position: relative;
     border:1px solid rgba(5, 5, 5, 0.09);
     border-radius: 5px;
-    height:180px;
     width:65%;
     padding:20px;
     margin: 15px 20px;
-    display: flex;
+}
 
+.showing-cart-items{
+    display: flex;
+    height:180px;
+
+}
+
+.vendor-order-status{
+    width: 50%;;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: blue; */
 }
 
 .cart-product-img{
@@ -515,7 +530,8 @@ padding-top: 0;
     }
 }
 .cart-item-overview{
-    width:100%;
+    width:50%;
+    /* background-color: red; */
 }
 .remove-from-cart-btn{
     background-color: transparent;
@@ -610,9 +626,6 @@ border-radius: 100%;
 background-color: red;
 }
 
-.order-container{
-    margin-top: 80px;;
-}
 
 .profile-container{
     display: flex;
@@ -682,4 +695,33 @@ background-color: red;
 .selected-quantity{
     color:rgb(243, 39, 93);
     border-color: rgb(243, 39, 93);
+}
+
+.order-container{
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.dashboard{
+    margin-top: 80px;
+    display: flex;
+    width:100%  ;
+    justify-content: space-around;
+}
+.dashboard-options{
+    width: 50%;
+    padding: 20px;
+    text-align: center;
+    font-size: large;
+    font-weight: 600;
+    &:hover{
+        cursor: pointer;
+    }
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.selected-page{
+    background-color: rgb(243, 39, 93);
+    color: white;;
 }

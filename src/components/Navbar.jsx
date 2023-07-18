@@ -7,7 +7,7 @@ import { removeUser } from '../redux/slice/user.slice'
 import items from "../utils/Categories";
 
 
-const Navbar = ({products, setShowCarousel, setFilteredProducts}) => {
+const Navbar = ({page, products, setShowCarousel, setFilteredProducts}) => {
   // const [filteredProducts, setFilteredProducts] = useState([]);
   const user = useSelector(state=>state.user.users)
   const dispatch = useDispatch();
@@ -50,7 +50,7 @@ const Navbar = ({products, setShowCarousel, setFilteredProducts}) => {
           </div>
 
     {
-      user.role!="admin" && 
+      (user.role!="admin" && page =="home") && 
           <div className="categories">
           <Menu
           onClick={onClick}
@@ -66,7 +66,7 @@ const Navbar = ({products, setShowCarousel, setFilteredProducts}) => {
         </div>
         <div className={user.role=="admin"? "admin-navbar-right": "navbar-right"}>
           {
-            user.role!="admin" &&
+            (user.role!="admin" && page =="home") &&
         <Input prefix={<SearchOutlined className='search-outlined'/>} onChange={check} placeholder='Search for products, brands and more' className="search-navbar" />
           }
         <div className={user.role=="admin"? "admin-pages": "pages"}>
@@ -85,17 +85,25 @@ const Navbar = ({products, setShowCarousel, setFilteredProducts}) => {
 
 
           {user.role=="admin" ?
-        <div className="page" onClick={()=>navigate('/orders')}>
+        <div className="page" onClick={()=>navigate('/allOrders')}>
           
           <img className='bag-icon-navbar' src={require('../assets/images/shopping-bag.png')} alt="" />
           All Orders
           </div>:
-        <div className="page" onClick={()=>navigate('/orders')}>
+
+
+
+
+
+
+
+<div className="page" onClick={()=>navigate('/orders')}>
 
           <img className='bag-icon-navbar' src={require('../assets/images/shopping-bag.png')} alt="" />
         Orders
         </div>
         }
+       
         {user.role=="vendor" && 
         <div className="page"  onClick={()=>navigate('/myProducts')}>
         <img className='bag-icon-navbar' src={require('../assets/images/shopping-bag.png')} alt="" />

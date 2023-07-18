@@ -45,7 +45,19 @@ const ShowProduct = () => {
   async function addToCart(){
     console.log(user.email)
     console.log(location.state.item._id)
-    const res = await axios.post('http://localhost:5000/addToCart',{buyer_email:user.email, product_id:location.state.item._id})
+    const res = await axios.post('http://localhost:5000/addToCart',{
+      
+    buyer_email:user.email,
+    buyer_name:user.name,
+    vendor_email:location.state.item.vendor_email,
+    vendor_name:location.state.item.vendor_name,
+     product_id:location.state.item._id,
+    brand:location.state.item.brand,
+    price:location.state.item.price,
+    discount:location.state.item.discount,
+    product_name:location.state.item.product_name,
+    image:location.state.item.image[0]
+    })
     console.log(res.data)
     setPresent(true)
   }
@@ -62,31 +74,29 @@ const ShowProduct = () => {
       <div className="product-details">
 
         <div className="product-images">
-          <img src={require('../assets/images/jeans1.jpg')} className="product-page-image" alt="" />
-          <img src={require('../assets/images/jeans1.jpg')} className="product-page-image" alt="" />
-          <img src={require('../assets/images/jeans1.jpg')} className="product-page-image" alt="" />
-          <img src={require('../assets/images/jeans1.jpg')} className="product-page-image" alt="" />
+          {
+            location.state.item.image.map((img)=>{
+              // console.log(img)
+              return <img src={img} className="product-page-image" alt="" />
+            })
+          }
+
 
 
         </div>
       <div className="product-item-details">
         <div>
-        <h1>Levis</h1>
-        <h2>Men Blue Solid Denim Jacket</h2>
+        <h1>{location.state.item.brand}</h1>
+        <h2>{location.state.item.product_name}</h2>
         </div>
         <Divider/>
-        <h2>${location.state.item.price}</h2>
+        <h2>${location.state.item.discount}<h4 style={{textDecoration:"line-through"}}> ${location.state.item.price}</h4></h2>
         <Divider/>
         <div>
 
-          {/* <div className="show-product-no-of-items">
-            <Button onClick={remove1}>-</Button>
-            <Input className="no-of-items" value={number}disabled/>
-            <Button onClick={add1}>+</Button>
-          </div> */}
-        <h1 className="total-price-product-detail">Total Price:{price}</h1>
+        {/* <h1 className="total-price-product-detail">Total Price:{price}</h1> */}
         </div>
-        <Divider/>
+        {/* <Divider/> */}
         <div className="product-page-btns">
           {
             present === true?
@@ -97,7 +107,6 @@ const ShowProduct = () => {
             <button onClick={addToCart}  className="product-page-add-to-cart"><HeartOutlined className="add-to-cart-icon"/> Add to Cart</button>
 
           }
-          {/* <button className="buy-now-btn">Buy Now</button> */}
         </div>
         <Divider/>
         <div>
@@ -105,10 +114,7 @@ const ShowProduct = () => {
           <p>{location.state.item.desc}</p>
         </div>
         <Divider/>
-        <div>
-          <h2>Delivery Options</h2>
-
-        </div>
+        
       </div>
       </div>
 

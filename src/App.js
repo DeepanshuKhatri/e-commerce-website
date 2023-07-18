@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux'
 import Order from './pages/Order'
 import Vendors from './pages/Vendors'
 import AllProducts from './pages/AllProducts'
+import AllOrders from './pages/AllOrders'
 
 const App = () => {
   const user = useSelector(state=>state.user.users)
@@ -30,6 +31,8 @@ const App = () => {
     <Route path='/orders' element={<Order/>}/>
     <Route path='/vendors' element={<Vendors/>}/>
     <Route path='/allProducts' element={<AllProducts/>}/>
+    <Route path='/allOrders' element={<AllOrders/>}/>
+
 
         </>
       }

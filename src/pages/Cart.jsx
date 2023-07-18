@@ -97,7 +97,7 @@ const Cart = () => {
           <Divider/>
           {cartItems && 
           cartItems.map((cart)=>{
-           return  <ShowCartItem cart={cart} cartItems={cartItems} setCartItems={setCartItems}/>
+           return  <ShowCartItem page="cart" cart={cart} cartItems={cartItems} setCartItems={setCartItems}/>
           })
           }
         </div>

@@ -1,56 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
-import axios from 'axios'
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import ShowCartItem from '../components/ShowCartItem';
+import { Divider } from 'antd';
 
 const Order = () => {
-  const [orders, setOrders] = useState([])
+  const [orders, setOrders] = useState([]);
+  const user = useSelector(state=>state.user.users);
+
   useEffect(()=>{
     async function run(){
-      const data = await axios.get('http://localhost:5000/getAllOrders')
-      console.log(data.data)
-      setOrders(data.data);
+      const data = await axios.post('http://localhost:5000/getMyOrders',{email:user.email});
+      setOrders(data.data)
     }
     run();
-  }, [])
+  },[])
+  console.log(orders)
+
+
+
   return (
     <div>
       <Navbar/>
       <div className="order-container">
-
-      <table class="table">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Product</th>
-              <th scope="col">Email</th>
-              <th scope="col">Status</th>
-              <th scope="col">Address</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders && 
-            orders.map((order)=>{
-              return <tr>
-                <td>{order.vendor_name}</td>
-                <td>{order.product_id}</td>
-
-                <td>{order.email}</td>
-
-                <td>{order.status}</td>
-
-                <td>{order.address}</td>
+      {/* <div className="cart-details"> */}
+          
+          <Divider/>
+          {orders && 
+          orders.map((order)=>{
+           return  <ShowCartItem page="order" cart={order} cartItems={orders} setCartItems={setOrders}/>
+          })
+          }
+        {/* </div> */}
 
 
-              </tr>
-            })
-            
-            }
-            
-          </tbody>
-        </table>
       </div>
+
     </div>
   )
 }
 
-export default Order
+export default Order;

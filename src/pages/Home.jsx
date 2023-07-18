@@ -35,11 +35,11 @@ const Home = () => {
       {
         user.role==='admin'?
         <>
-        <Navbar/>
+        <Navbar />
         </>:
         <>
         
-      <Navbar products={products} setShowCarousel={setShowCarousel} setFilteredProducts={setFilteredProducts}/>
+      <Navbar page="home" products={products} setShowCarousel={setShowCarousel} setFilteredProducts={setFilteredProducts}/>
       <Carousel className="carousel" style={showCarousel===true? {display: "block"}: {display:"none"}} dotPosition="bottom" afterChange={onChange} autoplay >
       <div>
         <img className="slider-image" src={require('../assets/images/sliderimage1.png')} alt="" />

@@ -67,7 +67,7 @@ const Lists = ({item, page}) => {
   return (
     <div className="item">
                   <img
-                    src={require("../assets/images/jeans1.jpg")}
+                    src={item?.image[0]}
                     width={200}
                     height={300}
                     alt=""
