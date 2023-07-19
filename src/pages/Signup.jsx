@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Input, Button, Divider, Radio } from 'antd'
+import { Form, Input, Button,message, Divider, Radio } from 'antd'
 import {GoogleOutlined} from '@ant-design/icons'
 import '../assets/styles/styles.css'
 import { addUser } from '../redux/slice/user.slice'
@@ -15,12 +15,22 @@ import { useNavigate } from 'react-router-dom'
 
 const Signup = () => {
 
+    const [messageApi, contextHolder] = message.useMessage();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("")
     const [role, setRole] = useState("customer")
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+
+
+    const error = () => {
+        messageApi.open({
+          type: 'error',
+          content: 'User Already Exists',
+        });
+      };
 
     const signInWithGoogle = async () => {
         const provider = new GoogleAuthProvider();
@@ -29,11 +39,7 @@ const Signup = () => {
           console.log(res);
           const response = await axios.post('http://localhost:5000/signup', {name:res1.displayName, email:res1.email, role:role})
           console.log(response.data)
-        //   dispatch(addUser({
-        //       name: res1.displayName,
-        //       email: res1.email,
-        //       role:role,
-        //     }));
+        
             navigate('/profile');
         //   const q = query(collection(db, "users"), where("uid", "==", res1.uid));
         //   console.log(q);
@@ -61,20 +67,21 @@ const Signup = () => {
 
         const res = await axios.post('http://localhost:5000/signup', {name, email, password, role})
         if(res.status==201){
-            alert("User Already Exists")
+            error();
         }
         else {
-            alert("Account Created Successfully")
+            // alert("Account Created Successfully")
             navigate('/login')
         }
         console.log(email)
         console.log(password)
         console.log(name)
         console.log(role)
-        navigate('/login')
+        // navigate('/login')
     }
     return (
         <div className='login-signup-page'>
+            {contextHolder}
 
             <div className='login-signup-container'>
                 <Form
@@ -123,17 +130,22 @@ const Signup = () => {
                         <Input.Password  onChange={e=>setPassword(e.target.value)} placeholder='Enter Password' className='login-signup-input' />
                     </Form.Item>
 
-                    <Form.Item  label={<p style={{fontSize:"19px"}}>Select Role</p>} >
-
+                    <Form.Item   
+                    label="Select Role"
+                    >
                     <Radio.Group value={role} className='select-role' onChange={e=>setRole(e.target.value)}>
-            <Radio value="customer"> <p style={{fontSize:"19px"}}>Customer</p></Radio>
-            <Radio value="vendor"> <p style={{fontSize:"19px"}}>Vendor</p> </Radio>
+            <Radio value="customer">Customer</Radio>
+            <Radio value="vendor">Vendor</Radio>
           </Radio.Group>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <p>Already have an account? <a href="/login">Login</a></p>
                     </Form.Item>
                     <Form.Item>
 
                         <Button type='primary'className='login-btn' htmlType='submit'>
-                            Sign in
+                            Signup
                         </Button>
                     </Form.Item>
 

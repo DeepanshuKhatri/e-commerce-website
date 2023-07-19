@@ -29,7 +29,7 @@ const Navbar = ({page, products, setShowCarousel, setFilteredProducts}) => {
   }
   function onClick(e) {
     console.log(e.key)
-    setFilteredProducts(products?.filter(x=>x.category[1].includes(e.key)))
+    setFilteredProducts(products?.filter(x=>x.brand.includes(e.key)))
     setShowCarousel(false)
 
   }
@@ -67,7 +67,7 @@ const Navbar = ({page, products, setShowCarousel, setFilteredProducts}) => {
         <div className={user.role=="admin"? "admin-navbar-right": "navbar-right"}>
           {
             (user.role!="admin" && page =="home") &&
-        <Input prefix={<SearchOutlined className='search-outlined'/>} onChange={check} placeholder='Search for products, brands and more' className="search-navbar" />
+        <Input prefix={<SearchOutlined className='search-outlined'/>} onChange={check} placeholder='Search for Brand' className="search-navbar" />
           }
         <div className={user.role=="admin"? "admin-pages": "pages"}>
         <div className="page" onClick={()=>navigate('/profile')}>

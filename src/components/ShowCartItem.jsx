@@ -4,7 +4,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { CaretDownOutlined } from "@ant-design/icons";
 
-const ShowCartItem = ({price, discount, setPrice, setDiscount, page, cart, cartItems, setCartItems }) => {
+const ShowCartItem = ({price, discount,setTotalDiscount,setTotalPrice, setPrice, setDiscount, page, cart, cartItems, setCartItems }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productQuantity, setProductQuantity] = useState(1);
   const user = useSelector((state) => state.user.users);
@@ -20,8 +20,10 @@ const ShowCartItem = ({price, discount, setPrice, setDiscount, page, cart, cartI
       setDiscount(prev=> prev+(cart.discount * quantity));
         run();
       }
-      if(page=="order"){
-        
+      if(page=="myorder"){
+        console.log(cart)
+        setTotalPrice(prev=> prev+(cart.price)*(cart.quantity))
+        setTotalDiscount(prev=>prev+(cart.discount)*(cart.quantity))
       }
       // setPrice( (price +cart.price));
     },[quantity])
@@ -42,6 +44,12 @@ const ShowCartItem = ({price, discount, setPrice, setDiscount, page, cart, cartI
     setIsModalOpen(false);
     setQuantity(productQuantity);
   }
+
+  async function handleChange(id, value){
+    const data = axios.post('http://localhost:5000/changeOrderStatus',{id:id, value:value})
+    console.log(data.data);
+  }
+
   // console.log(cart)
   async function removeItem(id) {
     setPrice(prev=> prev-cart.price);
@@ -199,9 +207,10 @@ const ShowCartItem = ({price, discount, setPrice, setDiscount, page, cart, cartI
       </div>
       <div className="vendor-order-status">
         {
-          user.role=="vendor" && page=="order" &&
+          user.role=="vendor" && page=="myorder" &&
         <Select
-          defaultValue={0}
+          defaultValue={cart?.status||0}
+          onChange={(value)=>handleChange(cart._id, value)}
           style={{
             width: 200,
           }}
@@ -231,10 +240,10 @@ const ShowCartItem = ({price, discount, setPrice, setDiscount, page, cart, cartI
         </div>
     </div>
     {
-      user.role=="customer" &&  page=="order" &&
+      user.role!="admin" &&  page=="order" &&
 
     <Steps
-    current={1}
+    current={cart?.status}
     items={[
       {
         title: 'Order Placed',

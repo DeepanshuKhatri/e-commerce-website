@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input, Button, Modal, Form, Cascader, Upload } from "antd";
+import { Input,message, Button, Modal, Form, Cascader, Upload } from "antd";
 import options from "../utils/AddItemOptions";
 import { useSelector } from "react-redux";
 import axios from 'axios'
@@ -11,22 +11,35 @@ const AddProduct = ({ setIsModalOpen, isModalOpen }) => {
 
   const [image,setImage]=useState([]);
   const [fileList, setFileList] = useState([]);
+  const [messageApi, contextHolder] = message.useMessage();
 
-  const [discount, setDiscount] = useState(0);
+  const [discount, setDiscount] = useState();
   const [brand, setBrand] = useState("")
 
   const [name, setName] = useState("");
   const [category, setCategory] = useState([]);
   const [desc, setDesc] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState();
   const user = useSelector(state=>state.user.users)
 
   const handleChange = ({ file:newFile,fileList: newFileList }) => {
     setFileList(newFileList) ;
   (newFile.status==='done')&& setImage([...image,`http://localhost:5000/${newFile.response}`])
 };
-
+const error = () => {
+  messageApi.open({
+    type: 'error',
+    content: 'Please Upload atleast 4 images',
+  });
+};
   const handleOk = async () => {
+    if(fileList.length<4){
+      error();
+      // setIsModalOpen(false);
+      return;
+    }
+    else{
+
     console.log(image)
     const res = await axios.post('http://localhost:5000/addProduct',{
       vendor_name:user.name,
@@ -44,6 +57,9 @@ const AddProduct = ({ setIsModalOpen, isModalOpen }) => {
     console.log(name);
     console.log(desc);
     console.log(category);
+    setIsModalOpen(false);
+  }
+
     // setIsModalOpen(false)
   };
   const uploadButton = (
@@ -64,6 +80,7 @@ const AddProduct = ({ setIsModalOpen, isModalOpen }) => {
 
   return (
     <div>
+      {contextHolder}
       <Modal
         title="Basic Modal"
         width={1000}
@@ -145,17 +162,19 @@ const AddProduct = ({ setIsModalOpen, isModalOpen }) => {
           <Form.Item
             label="Price"
             name="price"
-            rules={[{ required: true, message: "Please fill this" }]}
+            maxLength={5}
+            rules={[{ required: true, message: "Please fill this" },{max:5, message:"Max Price Limit"}]}
           >
-            <Input onChange={(e) => setPrice(e.target.value)} />
+            <Input type="number" maxLength={5}  onChange={(e) => setPrice(e.target.value)} />
           </Form.Item>
 
           <Form.Item
             label="Discount"
             name="discount"
-            rules={[{ required: true, message: "Please fill this" }]}
+          
+            rules={[{ required: true, message: "Please fill this" }, {max:5, message:"Max Price Limit"}]}
           >
-            <Input onChange={(e) => setDiscount(e.target.value)} />
+            <Input type="number" maxLength={5} onChange={(e) => setDiscount(e.target.value)} />
           </Form.Item>
 
           <div className="addproductbtn">

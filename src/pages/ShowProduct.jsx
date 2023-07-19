@@ -104,7 +104,7 @@ const ShowProduct = () => {
             <button onClick={()=>navigate('/cart')} className="product-page-add-to-cart"> Go to Cart</button>
             :
 
-            <button onClick={addToCart}  className="product-page-add-to-cart"><HeartOutlined className="add-to-cart-icon"/> Add to Cart</button>
+            <button onClick={addToCart}  className="product-page-add-to-cart"><HeartOutlined disabled={location.state.item.vendor_email === user.email} className="add-to-cart-icon"/> Add to Cart</button>
 
           }
         </div>

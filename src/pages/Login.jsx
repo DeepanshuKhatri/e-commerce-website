@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Input, Button, Divider } from 'antd'
+import { Form, Input, Button, Divider, message } from 'antd'
 import {GoogleOutlined} from '@ant-design/icons'
 import '../assets/styles/styles.css'
 import axios from 'axios'
@@ -9,18 +9,38 @@ import { useNavigate } from 'react-router-dom'
 // import e from 'express'
 
 const Login = () => {
-
+    const [messageApi, contextHolder] = message.useMessage();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
 
+    const success = () => {
+        messageApi.open({
+          type: 'success',
+          content: 'This is a success message',
+          duration: 10,
+        });
+      };
+
+      const error = (content) => {
+        messageApi.open({
+          type: 'error',
+          content: content,
+          duration:5,
+        });
+      };
 
     async function onFinish() {
         const res = await axios.post('http://localhost:5000/login', {email, password})
         if(res.status==201){
-            alert("Invalid Credentials")
+            // alert()
+            // success();
+            error("Invalid Credentials");
+        }
+        else if(res.status==202){
+            error("You don't have access!")
         }
         else{
             console.log(res.data)
@@ -30,7 +50,8 @@ const Login = () => {
                 role:res.data.role,
                 // password:res.data.password
             }))
-            alert("Logged In Successfully")
+            // alert("Logged In Successfully")
+            success();
             navigate('/')
         }
         console.log("Finish")
@@ -39,6 +60,7 @@ const Login = () => {
     }
     return (
         <div className='login-signup-page'>
+            {contextHolder}
 
             <div className='login-signup-container'>
                 <Form
@@ -71,6 +93,9 @@ const Login = () => {
                         ]}
                     >
                         <Input.Password  onChange={e=>setPassword(e.target.value)} placeholder='Enter Password' className='login-signup-input' />
+                    </Form.Item>
+                    <Form.Item>
+                        <p>Dont't have an Account? <a href="/signup">Signup</a></p>
                     </Form.Item>
                     <Form.Item>
 

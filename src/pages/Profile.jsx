@@ -3,14 +3,21 @@ import { Input, Button, Form, Row, Col, Divider } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../redux/slice/user.slice";
 import Navbar from "../components/Navbar";
+import EditProfile from "../components/EditProfile";
+
+
 const Profile = () => {
   const userData = useSelector((state) => state.user.users);
   const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [name, setName] = useState(userData.name);
   const [email, setEmail] = useState(userData.email);
   const [address, setAddress] = useState(userData?.address);
   const [password, setPassword] = useState(userData?.password);
   console.log(name);
+
+
 
   function onFinish() {
     dispatch(
@@ -46,7 +53,8 @@ const Profile = () => {
               <Col span={12}><h4>Password</h4></Col>
               <Col span={12}><h4>{userData?.password|| "N/A"}</h4></Col>
             </Row>
-            <button className="edit-profile-btn">Edit Profile</button>
+            <button onClick={()=>setIsModalOpen(true)} className="edit-profile-btn">Edit Profile</button>
+            <EditProfile isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
           </div>
         </div>
       </div>

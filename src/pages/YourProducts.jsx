@@ -23,6 +23,7 @@ const YourProducts = () => {
       const data = await axios.post("http://localhost:5000/getMyProductOrders", {
         vendor_email: user.email,
       });
+      console.log(data.data)
       setOrders(data.data);
     }
     run();
@@ -97,11 +98,14 @@ const YourProducts = () => {
 
               {orders &&
                 orders.map((cart) => {
-                  setTotalPrice(prev=> prev*cart.price*cart.quantity)
-                  setTotalDiscount(prev=>prev*cart.discount*cart.quantity)
+                  // setTotalPrice(prev=> prev*cart.price*cart.quantity)
+                  // setTotalDiscount(prev=>prev*cart.discount*cart.quantity)
                   return (
                     <ShowCartItem
-                      page="order"
+                    cart={cart}
+                    setTotalDiscount={setTotalDiscount}
+                    setTotalPrice={setTotalPrice}
+                      page="myorder"
                       cartItems={orders}
                       setCartItems={setOrders}
                     />
@@ -121,17 +125,17 @@ const YourProducts = () => {
                 <div>{orders.length}</div>
               </div>
               <div className="mrp-details">
-                <div>Discount on MRP</div>
-                <div>123</div>
+                <div>Total MRP Price</div>
+                <div>{totalPrice  }</div>
               </div>
               <div className="mrp-details">
-                <div>Coupon Discount</div>
-                <div>123</div>
+                <div>Total Buying Price</div>
+                <div>{totalDiscount}</div>
               </div>
               <Divider />
               <div className="mrp-details">
-                <h1>Total Amount</h1>
-                <h2>640</h2>
+                <h1>Total Profit</h1>
+                <h2>{totalDiscount}</h2>
               </div>
               <button
                 onClick={() => console.log("first")}

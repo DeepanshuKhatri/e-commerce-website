@@ -10,6 +10,10 @@ import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const user = useSelector((state) => state.user.users);
+  const [coupon, setCoupon] = useState(0);
+  const [avaliable1, setAvaliable1] = useState(false);
+  const [avaliable2, setAvaliable2] = useState(false);
+
   const [price, setPrice] = useState(0);
   const [discount, setDiscount] = useState(0);
   // const [mrp, setMrp] = useState(0);
@@ -118,6 +122,12 @@ const Cart = () => {
         <div className="place-order">
           <div>
             <h2>COUPONS</h2>
+            <button className="coupon"  onClick={()=>setCoupon(100)}>
+              asdfjlas
+            </button>
+            <button className="coupon"  onClick={()=>setCoupon(50)}>
+              sadfjsd
+            </button>
             <Divider/>
           </div>
             <h4>Price Details(1 item)</h4>
@@ -142,13 +152,13 @@ const Cart = () => {
               Coupon Discount
             </div>
             <div>
-              123
+              -{coupon}
             </div>
           </div>
           <Divider/>
           <div className="mrp-details">
             <h1>Total Amount</h1>
-            <h2>{discount}</h2>
+            <h2>{discount-coupon}</h2>
           </div>
           <button onClick={placeOrder} className="product-page-add-to-cart">Place Order</button>
           
