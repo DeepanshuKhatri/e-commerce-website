@@ -6,13 +6,18 @@ import CartNavbar from "../components/CartNavbar";
 import { Divider, Modal, Form, Input, Checkbox, Button } from "antd";
 import ShowCartItem from "../components/ShowCartItem";
 import AddAddress from "../utils/AddAddress";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const user = useSelector((state) => state.user.users);
+  const [price, setPrice] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  // const [mrp, setMrp] = useState(0);
   const [cartItems, setCartItems] = useState([]);
   const [userAddress, setUserAddress] = useState([]);
   const [index, setIndex] = useState(0)
   // const [cartProduct, setCartProduct] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function run() {
@@ -61,11 +66,20 @@ const Cart = () => {
 
 
   async function placeOrder(){
+    setPrice(0);
+    setDiscount(0);
+
     const res = await axios.post("http://localhost:5000/placeOrder", {cartItems: cartItems})
     console.log(res.data)
-    const deleteCart = await axios.post('http://localhost:5000/emptyCart', {email: user.email});
+    emptyCart();
+
+  }
+  
+  async function emptyCart(){
+    const deleteCart = await axios.post('http://localhost:5000/emptyCartItems', {buyer_email: user.email});
     console.log(deleteCart.data);
     setCartItems([])
+   navigate('/orders') 
   }
 
   console.log(cartItems);
@@ -97,7 +111,7 @@ const Cart = () => {
           <Divider/>
           {cartItems && 
           cartItems.map((cart)=>{
-           return  <ShowCartItem page="cart" cart={cart} cartItems={cartItems} setCartItems={setCartItems}/>
+           return  <ShowCartItem page="cart" discount={discount} price={price} setDiscount={setDiscount} setPrice={setPrice} cart={cart} cartItems={cartItems} setCartItems={setCartItems}/>
           })
           }
         </div>
@@ -112,15 +126,15 @@ const Cart = () => {
               Total MRP
             </div>
             <div>
-              123
+              {price}
             </div>
           </div>
           <div className="mrp-details">
             <div>
-              Discount on MRP
+              Discounted on MRP
             </div>
             <div>
-              123
+              {price - discount}
             </div>
           </div>
           <div className="mrp-details">
@@ -134,7 +148,7 @@ const Cart = () => {
           <Divider/>
           <div className="mrp-details">
             <h1>Total Amount</h1>
-            <h2>640</h2>
+            <h2>{discount}</h2>
           </div>
           <button onClick={placeOrder} className="product-page-add-to-cart">Place Order</button>
           

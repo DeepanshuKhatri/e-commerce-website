@@ -10,6 +10,8 @@ import ShowCartItem from "../components/ShowCartItem";
 
 const YourProducts = () => {
   const [products, setProducts] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalDiscount, setTotalDiscount] = useState(0)
   const [orders, setOrders] = useState([]);
   const [page, setPage] = useState(1);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -18,8 +20,8 @@ const YourProducts = () => {
 
   useEffect(() => {
     async function run() {
-      const data = await axios.post("http://localhost:5000/getMyOrders", {
-        email: user.email,
+      const data = await axios.post("http://localhost:5000/getMyProductOrders", {
+        vendor_email: user.email,
       });
       setOrders(data.data);
     }
@@ -33,7 +35,7 @@ const YourProducts = () => {
   useEffect(() => {
     async function run() {
       const res = await axios.post("http://localhost:5000/myProduct", {
-        vendor_name: user.name,
+        vendor_email: user.email,
       });
       setProducts(res.data);
       setFilteredProducts(res.data);
@@ -92,22 +94,11 @@ const YourProducts = () => {
 
           <div className="cart-container">
             <div className="cart-details">
-              {/* <div className="change-address">
-            <div className="current-address">
-              {
-                userAddress &&
-                <>
-                 <p> Deliver to: {userAddress[index]?.name}</p>
-                </>
-              } 
-            </div>
-            <div>
-              <button onClick={address} className="change-address-btn">CHANGE ADDRESS</button>
-            </div>
-          </div>
-          <Divider/> */}
+
               {orders &&
                 orders.map((cart) => {
+                  setTotalPrice(prev=> prev*cart.price*cart.quantity)
+                  setTotalDiscount(prev=>prev*cart.discount*cart.quantity)
                   return (
                     <ShowCartItem
                       page="order"
@@ -119,13 +110,15 @@ const YourProducts = () => {
             </div>
             <div className="place-order">
               <div>
-                <h2>COUPONS</h2>
+                <h2>Total Earnings</h2>
                 <Divider />
               </div>
-              <h4>Price Details(1 item)</h4>
+              <h4>Total Items Sold ({orders.length})</h4>
+
+              {/* <h4>Price Details(1 item)</h4> */}
               <div className="mrp-details">
-                <div>Total MRP</div>
-                <div>123</div>
+                <div>Total Items Sold</div>
+                <div>{orders.length}</div>
               </div>
               <div className="mrp-details">
                 <div>Discount on MRP</div>

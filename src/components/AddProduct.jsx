@@ -30,7 +30,7 @@ const AddProduct = ({ setIsModalOpen, isModalOpen }) => {
     console.log(image)
     const res = await axios.post('http://localhost:5000/addProduct',{
       vendor_name:user.name,
-      email:user.email,
+      vendor_email:user.email,
       price:+price,
       desc:desc,
       product_name:name,

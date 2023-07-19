@@ -1,14 +1,33 @@
 import { Col, FloatButton, Modal, Row, Select, Steps } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { CaretDownOutlined } from "@ant-design/icons";
 
-const ShowCartItem = ({ page, cart, cartItems, setCartItems }) => {
+const ShowCartItem = ({price, discount, setPrice, setDiscount, page, cart, cartItems, setCartItems }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productQuantity, setProductQuantity] = useState(1);
   const user = useSelector((state) => state.user.users);
   const [quantity, setQuantity] = useState(1);
+
+
+  function run(){
+
+  }
+  useEffect(()=>{
+    if(page=="cart"){
+      setPrice(prev=>prev+(cart.price*quantity))
+      setDiscount(prev=> prev+(cart.discount * quantity));
+        run();
+      }
+      if(page=="order"){
+        
+      }
+      // setPrice( (price +cart.price));
+    },[quantity])
+
+
+  
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -25,6 +44,8 @@ const ShowCartItem = ({ page, cart, cartItems, setCartItems }) => {
   }
   // console.log(cart)
   async function removeItem(id) {
+    setPrice(prev=> prev-cart.price);
+    setDiscount(prev=> prev-(cart.discount * quantity));
     const res = await axios.post("http://localhost:5000/removeFromCart", {
       product_id: id,
     });
