@@ -1,4 +1,4 @@
-import { Col, FloatButton, Modal, Row, Select, Steps } from "antd";
+import { Button, Col, FloatButton, Modal, Row, Select, Steps } from "antd";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -29,7 +29,10 @@ const ShowCartItem = ({price, discount,setTotalDiscount,setTotalPrice, setPrice,
     },[quantity])
 
 
-  
+    async function cancelOrder(){
+      const res = await axios.post('http://localhost:5000/cancelOrder',{id:cart._id})
+      console.log(res.data);
+    }
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -71,6 +74,7 @@ const ShowCartItem = ({price, discount,setTotalDiscount,setTotalPrice, setPrice,
         <h5>{cart?.brand}</h5>
         <h4>{cart?.product_name}</h4>
         <h4>${cart?.price}</h4>
+
         {page == "cart" ? (
           <>
             <button onClick={showModal} className="quantity-btn">
@@ -203,7 +207,19 @@ const ShowCartItem = ({price, discount,setTotalDiscount,setTotalPrice, setPrice,
               Qty : {quantity} <CaretDownOutlined />
             </button>
           </>
-        )}
+        )}{
+          (page=='order') &&
+          <>
+          
+          {
+            (cart?.cancelled==false) ?
+            <h2 style={{color:"red"}} className="cancel-order-btn">Cancelled</h2>
+            :
+            <Button type="primary" onClick={cancelOrder} className="cancel-order-btn" danger>Cancel Order</Button>
+          }
+          </>
+        }
+
       </div>
       <div className="vendor-order-status">
         {
@@ -241,7 +257,8 @@ const ShowCartItem = ({price, discount,setTotalDiscount,setTotalPrice, setPrice,
     </div>
     {
       user.role!="admin" &&  page=="order" &&
-
+      <>
+      
     <Steps
     current={cart?.status}
     items={[
@@ -260,6 +277,8 @@ const ShowCartItem = ({price, discount,setTotalDiscount,setTotalPrice, setPrice,
       },
     ]}
   />
+      </>
+
     }
 
     </div>

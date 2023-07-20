@@ -258,11 +258,13 @@ padding-top: 0;
 }
 .item{
     margin:20px;
+    width: 200px;
     &:hover{
         cursor: pointer;
         box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.2);
 
     }
+    word-break: break-all;
 }
 .item-h1{
     text-align: center;
@@ -545,6 +547,10 @@ padding-top: 0;
         cursor: pointer;
     }
 }
+.cancel-order-btn{
+    position: absolute;
+    right:10px;
+}
 
 /* .profile-container{
     display:flex;
@@ -737,4 +743,21 @@ background-color: red;
     &:hover{
         cursor: pointer;
     }
+}
+
+.profile-image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:300px;
+    /* background-color: red; */
+}
+
+
+.profile-img{
+    border-radius: 100%;;
+}
+.best-selling{
+    border:1px solid black;
+    height:500px;
 }

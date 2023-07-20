@@ -33,15 +33,7 @@ const ShowProduct = () => {
     run();
   },[])
 
-  // function remove1(){
-  //   if(number==1) return;
-  //   setNumber(number-1);
-  //   setPrice(location.state.item.price*(number-1))
-  // }
-  // function add1(){
-  //   setNumber(number+1)
-  //   setPrice(location.state.item.price*(number+1))
-  // }
+
   async function addToCart(){
     console.log(user.email)
     console.log(location.state.item._id)
@@ -97,18 +89,25 @@ const ShowProduct = () => {
         {/* <h1 className="total-price-product-detail">Total Price:{price}</h1> */}
         </div>
         {/* <Divider/> */}
+        {location.state.item.vendor_email!== user.email  &&
+        
+        <>
+        
         <div className="product-page-btns">
           {
-            present === true?
+              present === true?
 
             <button onClick={()=>navigate('/cart')} className="product-page-add-to-cart"> Go to Cart</button>
             :
 
-            <button onClick={addToCart}  className="product-page-add-to-cart"><HeartOutlined disabled={location.state.item.vendor_email === user.email} className="add-to-cart-icon"/> Add to Cart</button>
+            <button disabled={location?.state?.item?.stock===0} onClick={addToCart}  className="product-page-add-to-cart"><HeartOutlined  className="add-to-cart-icon"/> Add to Cart</button>
 
           }
         </div>
         <Divider/>
+        </>
+
+        }
         <div>
           <h2>Product Description</h2>
           <p>{location.state.item.desc}</p>

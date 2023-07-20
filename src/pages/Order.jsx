@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import ShowCartItem from '../components/ShowCartItem';
 import { Divider } from 'antd';
+import ShowOrders from '../components/ShowOrders';
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -29,7 +30,7 @@ const Order = () => {
           <Divider/>
           {orders && 
           orders.map((order)=>{
-           return  <ShowCartItem page="order" cart={order} cartItems={orders} setCartItems={setOrders}/>
+           return  <ShowOrders page="order" cart={order} cartItems={orders} setCartItems={setOrders}/>
           })
           }
         {/* </div> */}

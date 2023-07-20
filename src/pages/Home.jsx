@@ -12,6 +12,7 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [showCarousel, setShowCarousel] = useState(true);
+  const [bestSelling, setBestSelling] = useState([])
   const user = useSelector(state=>state.user.users)
 
  
@@ -26,8 +27,15 @@ const Home = () => {
       setFilteredProducts(x.data)
       console.log('abc')
     }
+    async function run2(){
+      const x = await axios.get("http://localhost:5000/bestSelling");
+      console.log(x.data)
+    }
+
     run();
+    run2();
   }, []);
+
 
 
   return (
@@ -58,11 +66,22 @@ const Home = () => {
       </div>
     </Carousel>
     <Divider/>
+      {/* <div className="best-selling"> */}
+        <h1 style={{"textAlign":"center"}}>Best Selling</h1>
+      <ListingProducts page="home" products={bestSelling}/>
+
+
+      {/* </div> */}
+
+
+      <h1>All Products</h1>
 
 
       <ListingProducts page="home" products={filteredProducts}/>
+
       
       </>
+      
     }
     </div>
   );

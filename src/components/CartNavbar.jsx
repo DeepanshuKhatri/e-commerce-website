@@ -23,7 +23,7 @@ const CartNavbar = () => {
             </div>
         </div>
         <div className="cart-navbar-right">
-        <img src={require('../assets/images/secure-logo.jpg')}  alt="asdfds" />
+        <img src={require('../assets/images/secure-logo.jpg')}  alt="" />
 
         </div>
     </div>

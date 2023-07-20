@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Modal, Upload } from 'antd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {  Checkbox, Form, Input } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { addUser } from '../redux/slice/user.slice';
 
 const  EditProfile= ({isModalOpen, setIsModalOpen}) => {
     const userData = useSelector(state=>state.user.users)
@@ -9,6 +11,50 @@ const  EditProfile= ({isModalOpen, setIsModalOpen}) => {
   const [email, setEmail] = useState(userData.email);
   const [address, setAddress] = useState(userData?.address);
   const [password, setPassword] = useState(userData?.password);
+  const [image,setImage]=useState(userData?.image||"");
+  const [number, setNumber] = useState(userData?.number);
+  const [role, setRole] = useState(userData?.role)
+  const [fileList, setFileList] = useState([]);
+  const dispatch = useDispatch();
+
+  const handleChange = ({ file:newFile,fileList: newFileList }) => {
+    setFileList(newFileList) ;
+  (newFile.status==='done')&& setImage(`http://localhost:5000/${newFile.response}`)
+};
+
+  function handleNumber(e){
+    const x = e.target.value;
+    console.log(isNaN(x))
+    if(!isNaN(x)==true){
+      setNumber(x.trim());
+      console.log(number)
+      // return;
+    }
+    else{
+
+     
+
+    }
+  }
+
+
+
+
+
+
+const uploadButton = (
+  <div>
+    <PlusOutlined />
+    <div
+      style={{
+        marginTop: 8,
+      }}
+    >
+      Upload
+    </div>
+  </div>
+);
+
 
     const showModal = () => {
       setIsModalOpen(true);
@@ -21,6 +67,18 @@ const  EditProfile= ({isModalOpen, setIsModalOpen}) => {
     };
     const onFinish = (values) => {
         console.log('Success:', values);
+        dispatch(
+          addUser({
+            role:userData.role,
+            image,
+            name,
+            email,
+            address,
+            password,
+          })
+        );
+      setIsModalOpen(false);
+
       };
       const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -49,6 +107,21 @@ const  EditProfile= ({isModalOpen, setIsModalOpen}) => {
     onFinishFailed={onFinishFailed}
     autoComplete="off"
   >
+
+<Form.Item label="Update Profile">
+
+<Upload
+  action="http://localhost:5000/uploads"
+  multiple='true'
+  listType="picture-circle"
+  fileList={fileList}
+  onChange={handleChange}
+  name='image'
+  showUploadList={{showPreviewIcon:false,showDownloadIcon:false,showRemoveIcon:true}}
+>
+          {fileList.length >= 1 ? null : uploadButton}
+</Upload>
+</Form.Item>
     <Form.Item
       label="Username"
       name="username"
@@ -60,11 +133,9 @@ const  EditProfile= ({isModalOpen, setIsModalOpen}) => {
         },
       ]}
     >
-      <Input value={name}/>
+      <Input  value={name} onChange={(e)=>setName(e.target.value)} />
     </Form.Item>
-    <Form.Item>
-      
-    </Form.Item>
+    
       
       <Form.Item
         label="email"
@@ -80,6 +151,24 @@ const  EditProfile= ({isModalOpen, setIsModalOpen}) => {
         <Input disabled/>
       </Form.Item>
 
+      <Form.Item
+        label="number"
+        name="number"
+        initialValue={number}
+        rules={[
+          {
+            required: true,
+            message: 'Please input your password!',
+          },
+          {
+            max:10,
+            message: 'Max limit is 10',
+          },
+        ]}
+      >
+        <Input value={number} name="number"  onChange={handleNumber}/>
+      </Form.Item>
+
     <Form.Item
       label="Password"
       name="password"
@@ -91,7 +180,7 @@ const  EditProfile= ({isModalOpen, setIsModalOpen}) => {
         },
       ]}
     >
-      <Input value={password} />
+      <Input.Password value={password} onChange={(e)=>setPassword(e.target.value)} />
     </Form.Item>
 
 

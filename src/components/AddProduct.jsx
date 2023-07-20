@@ -12,9 +12,11 @@ const AddProduct = ({ setIsModalOpen, isModalOpen }) => {
   const [image,setImage]=useState([]);
   const [fileList, setFileList] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
+const [stock, setStock] = useState(0);
 
   const [discount, setDiscount] = useState();
   const [brand, setBrand] = useState("")
+  const [type, setType] = useState("");
 
   const [name, setName] = useState("");
   const [category, setCategory] = useState([]);
@@ -38,27 +40,47 @@ const error = () => {
       // setIsModalOpen(false);
       return;
     }
-    else{
+    if(type=="product"){
 
-    console.log(image)
-    const res = await axios.post('http://localhost:5000/addProduct',{
-      vendor_name:user.name,
-      vendor_email:user.email,
-      price:+price,
-      desc:desc,
-      product_name:name,
-      category:category,
-      image: image,
-      brand:brand,
-      discount:discount,
-    })
-    console.log(res.data);
+      console.log(image)
+      const res = await axios.post('http://localhost:5000/addProduct',{
+        vendor_name:user.name,
+        vendor_email:user.email,
+        price:+price,
+        desc:desc,
+        product_name:name,
+        category:category,
+        image: image,
+        brand:brand,
+        discount:discount,
+        stock:stock
+      })
+      console.log(res.data);
+    }
+    else{
+      console.log(image)
+      const res = await axios.post('http://localhost:5000/addDraft',{
+        vendor_name:user.name,
+        vendor_email:user.email,
+        price:+price,
+        desc:desc,
+        product_name:name,
+        category:category,
+        image: image,
+        brand:brand,
+        discount:discount,
+        stock:stock,
+      })
+      console.log(res.data);
+    }
+    
+
 
     console.log(name);
     console.log(desc);
     console.log(category);
     setIsModalOpen(false);
-  }
+
 
     // setIsModalOpen(false)
   };
@@ -169,7 +191,7 @@ const error = () => {
           </Form.Item>
 
           <Form.Item
-            label="Discount"
+            label="Price After Discount"
             name="discount"
           
             rules={[{ required: true, message: "Please fill this" }, {max:5, message:"Max Price Limit"}]}
@@ -177,17 +199,40 @@ const error = () => {
             <Input type="number" maxLength={5} onChange={(e) => setDiscount(e.target.value)} />
           </Form.Item>
 
+          <Form.Item
+            label="Stock"
+            name="stock"
+          
+            rules={[{ required: true, message: "Please fill this" }, {max:5, message:"Max Price Limit"}]}
+          >
+            <Input type="number" maxLength={5} onChange={(e) => setStock(e.target.value)} />
+          </Form.Item>
+
           <div className="addproductbtn">
             <Form.Item>
               <Button onClick={handleCancel}>Cancel</Button>
             </Form.Item>
+
+
             <Form.Item>
               <Button
                 className="submit-add-product"
                 type="primary"
+                onClick={()=>{setType('product')}}
                 htmlType="submit"
               >
                 Submit
+              </Button>
+            </Form.Item>
+
+            <Form.Item>
+              <Button
+                className="submit-add-product"
+                type="primary"
+                onClick={()=>{setType('draft')}}
+                htmlType="submit"
+              >
+                Draft
               </Button>
             </Form.Item>
           </div>

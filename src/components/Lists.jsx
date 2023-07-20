@@ -15,6 +15,7 @@ const Lists = ({item, page}) => {
     setIsModalOpen(true);
   };
 
+  console.log(page)
   useEffect(() => {
     async function run() {
       const data = await axios.post("http://localhost:5000/getCartProduct", {
@@ -26,29 +27,6 @@ const Lists = ({item, page}) => {
     run();
   }, []);
 
-  // console.log(cartItems);
-
-    
-    // async function addToCart(item){
-    //     setAddedToCart(true)
-    //     console.log(user.email)
-    //     console.log(item._id)
-    //     const res = await axios.post('http://localhost:5000/addToCart',
-    //     {
-    //       buyer_name:user.name,
-    //       buyer_email: user.email,
-    //       product_id:item._id
-    //     }
-    //     )
-    //     console.log(res.data)
-    //   }
-    //   async function remove(item){
-    //     const res = await axios.post('http://localhost:5000/removeFromCart',
-    //     {
-    //       buyer_email:user.email,
-    //       product_id:item._id
-    //     })
-    //   }
 
 
     async function removeItem(e, id){
@@ -56,9 +34,7 @@ const Lists = ({item, page}) => {
       const res = await axios.post('http://localhost:5000/removeProduct', {product_id:id});
       console.log(res.data);
       alert("Successfully Deleted")
-      // setCartItems(
-      //     cartItems.filter(x=> x._id !=id)
-      // )
+      
   }
   async function updateItem(e, id){
 
@@ -73,20 +49,20 @@ const Lists = ({item, page}) => {
                     alt=""
                   />
                   {/* <div className='item-name'> */}
-                  <h3>Levis</h3>
-                  <h3>{item.product_name}</h3>
-                  <p> {item.desc}</p>
+                  <h3>{item.brand}</h3>
+                  <p>{item.product_name}</p>
+                  {/* <p> {item.desc}</p> */}
                   <h3>${item.price}</h3>
 
                   {
-                    page==="myProducts" &&
+                    (page==="myProducts" || page=="draft")&&
                     <div className="product-options">
 
-                  <EditOutlined onClick={(e)=>showModal(e)} className='edit-product-option'/>
+                  <EditOutlined  onClick={(e)=>showModal(e)} className='edit-product-option'/>
                   <DeleteOutlined onClick={(e)=>removeItem(e, item._id)} className='delete-product-option'/>
                   </div>
                   }
-                   <EditProduct item={item} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen}/>
+                   <EditProduct page={page} item={item} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen}/>
                 </div>
   )
 }

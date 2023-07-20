@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import axios from 'axios'
 const { TextArea } = Input;
 
-const EditProduct = ({item, setIsModalOpen,isModalOpen}) => {
+const EditProduct = ({item,page, setIsModalOpen,isModalOpen}) => {
     const [name, setName] = useState(item.product_name||"");
   const [category, setCategory] = useState(item.category||[]);
   const [desc, setDesc] = useState(item.desc||"");
@@ -21,8 +21,22 @@ const EditProduct = ({item, setIsModalOpen,isModalOpen}) => {
 
 
   const user = useSelector(state=>state.user.users)
+  console.log(page)
 
   const handleOk = async () => {
+    if(page=="draft"){
+      const res = await axios.post('http://localhost:5000/addProduct',{
+        vendor_name:user.name,
+        vendor_email:user.email,
+        price:+price,
+        desc:desc,
+        product_name:name,
+        category:category,
+        // image: image,
+        // brand:brand,
+        // discount:discount,
+      })
+    }
     console.log(user.name)
     const res = await axios.post('http://localhost:5000/updateProduct',{
         id:item._id,
@@ -116,8 +130,9 @@ const EditProduct = ({item, setIsModalOpen,isModalOpen}) => {
                 className="submit-add-product"
                 type="primary"
                 htmlType="submit"
-              >
-                Submit
+              >{
+                page==="draft"? "Publish":"Save Draft"
+              }
               </Button>
             </Form.Item>
           </div>

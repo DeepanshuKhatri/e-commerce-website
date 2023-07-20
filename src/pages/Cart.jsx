@@ -70,8 +70,17 @@ const Cart = () => {
 
 
   async function placeOrder(){
+    if(userAddress.length==0){
+    setIsAddressModalOpen(true);
+      return;
+    }
     setPrice(0);
     setDiscount(0);
+    cartItems.forEach(async (x)=>{
+      const updateStock = await axios.post("http://localhost:5000/placeOrder", {id:x.product_id, quantity:x.quantity})
+      console.log(updateStock.data);
+    })
+
 
     const res = await axios.post("http://localhost:5000/placeOrder", {cartItems: cartItems})
     console.log(res.data)
@@ -122,10 +131,10 @@ const Cart = () => {
         <div className="place-order">
           <div>
             <h2>COUPONS</h2>
-            <button className="coupon"  onClick={()=>setCoupon(100)}>
+            <button className="coupon" disabled={cartItems.length===0}  onClick={()=>setCoupon(100)}>
               asdfjlas
             </button>
-            <button className="coupon"  onClick={()=>setCoupon(50)}>
+            <button className="coupon"  disabled={cartItems.length===0}  onClick={()=>setCoupon(50)}>
               sadfjsd
             </button>
             <Divider/>

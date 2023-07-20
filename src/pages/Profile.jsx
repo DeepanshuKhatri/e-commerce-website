@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Input, Button, Form, Row, Col, Divider } from "antd";
+import { Input, Button, Form, Row, Col, Divider, Upload, Avatar } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../redux/slice/user.slice";
 import Navbar from "../components/Navbar";
 import EditProfile from "../components/EditProfile";
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 
 
 const Profile = () => {
@@ -15,8 +16,29 @@ const Profile = () => {
   const [email, setEmail] = useState(userData.email);
   const [address, setAddress] = useState(userData?.address);
   const [password, setPassword] = useState(userData?.password);
-  console.log(name);
 
+
+
+  const [img, setImg] = useState();
+  const [image,setImage]=useState([]);
+  const [fileList, setFileList] = useState([]);
+
+  const handleChange = ({ file:newFile,fileList: newFileList }) => {
+    setFileList(newFileList) ;
+  (newFile.status==='done')&& setImage([...image,`http://localhost:5000/${newFile.response}`])
+};
+const uploadButton = (
+  <div>
+    <PlusOutlined />
+    <div
+      style={{
+        marginTop: 8,
+      }}
+    >
+      Upload
+    </div>
+  </div>
+);
 
 
   function onFinish() {
@@ -34,6 +56,13 @@ const Profile = () => {
       <Navbar />
       <div className="profile-container">
         <div className="profile-details">
+          <div className="profile-image">
+          
+          <Avatar src={userData?.image} size={250}/>
+
+          </div>
+
+
           <div className="personal-details">
             <h1>Profile Details</h1>
             <Divider />

@@ -13,6 +13,7 @@ const YourProducts = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalDiscount, setTotalDiscount] = useState(0)
   const [orders, setOrders] = useState([]);
+  const [draft, setDraft] = useState([])
   const [page, setPage] = useState(1);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +28,19 @@ const YourProducts = () => {
       setOrders(data.data);
     }
     run();
-  }, []);
+  }, [page]);
+
+
+  useEffect(()=>{
+    async function run() {
+    const data = await axios.post("http://localhost:5000/myDraft", {
+        vendor_email: user.email,
+      });
+      console.log(data.data)
+      setDraft(data.data);
+    }
+    run();
+  }, [page])
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -42,19 +55,19 @@ const YourProducts = () => {
       setFilteredProducts(res.data);
     }
     run();
-  }, []);
+  }, [page]);
 
   return (
     <div>
       <Navbar products={products} setFilteredProducts={setFilteredProducts} />
       <div className="dashboard">
-        <div
+      <div
           onClick={() => setPage(1)}
           className={
             page == 1 ? "dashboard-options selected-page" : "dashboard-options"
           }
         >
-          My Products
+          My Drafts
         </div>
         <div
           onClick={() => setPage(2)}
@@ -62,10 +75,33 @@ const YourProducts = () => {
             page == 2 ? "dashboard-options selected-page" : "dashboard-options"
           }
         >
+          My Products
+        </div>
+        <div
+          onClick={() => setPage(3)}
+          className={
+            page == 3 ? "dashboard-options selected-page" : "dashboard-options"
+          }
+        >
           Orders
         </div>
       </div>
+
       {page == 1 && (
+        <>
+          <ListingProducts page="draft" products={draft} />
+          {user.role != "customer" && (
+            <FloatButton onClick={showModal} icon={<PlusOutlined />} />
+          )}
+          {isModalOpen && (
+            <AddProduct
+              setIsModalOpen={setIsModalOpen}
+              isModalOpen={isModalOpen}
+            />
+          )}
+        </>
+      )}
+      {page == 2 && (
         <>
           <ListingProducts page="myProducts" products={filteredProducts} />
           {user.role != "customer" && (
@@ -80,26 +116,16 @@ const YourProducts = () => {
         </>
       )}
 
-      {page == 2 && (
+      {page == 3 && (
         <>
-          {/* {orders &&
-            orders.map((order) => {
-              return (
-                <ShowCartItem
-                  page="order"
-                  cartItems={orders}
-                  setCartItems={setOrders}
-                />
-              );
-            })} */}
+          
 
           <div className="cart-container">
             <div className="cart-details">
 
               {orders &&
                 orders.map((cart) => {
-                  // setTotalPrice(prev=> prev*cart.price*cart.quantity)
-                  // setTotalDiscount(prev=>prev*cart.discount*cart.quantity)
+
                   return (
                     <ShowCartItem
                     cart={cart}
@@ -119,7 +145,6 @@ const YourProducts = () => {
               </div>
               <h4>Total Items Sold ({orders.length})</h4>
 
-              {/* <h4>Price Details(1 item)</h4> */}
               <div className="mrp-details">
                 <div>Total Items Sold</div>
                 <div>{orders.length}</div>
@@ -137,12 +162,12 @@ const YourProducts = () => {
                 <h1>Total Profit</h1>
                 <h2>{totalDiscount}</h2>
               </div>
-              <button
+              {/* <button
                 onClick={() => console.log("first")}
                 className="product-page-add-to-cart"
               >
                 Place Order
-              </button>
+              </button> */}
             </div>
           </div>
         </>
