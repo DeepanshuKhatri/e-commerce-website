@@ -32,24 +32,32 @@ const Signup = () => {
       };
 
     function handleNumber(e){
-        const x = e.target.value;
-        console.log(isNaN(x))
-        if(isNaN(x)==true){
-          setNumber(number);
-          console.log(number)
-          return;
-        }
-        else{
+        // const x = e.target.value;
+        // setNumber(e.target.value);
+        // console.log(isNaN(x))
+        // if(!isNaN(x)){
+        //   setNumber(x);
+        //   // console.log(number)
+        //   // return;
+        // }
+        // else{
     
-          setNumber(x);
-          console.log(number)
+        //   setNumber(x);
+        //   console.log(number)
     
-        }
+        // }
       }
     const error = () => {
         messageApi.open({
           type: 'error',
           content: 'User Already Exists',
+        });
+      };
+
+      const error2 = (content) => {
+        messageApi.open({
+          type: 'error',
+          content: content,
         });
       };
 
@@ -103,10 +111,13 @@ const Signup = () => {
             navigate('/')
       };
 
-    async function onFinish() {
-        console.log("Finish")
+    async function onFinish(value) {
+        console.log(value,"i m inside finish")
         // 
-
+        if(isNaN(value.number)|| value.number.trim()===""){
+          error2("Please enter a valid number")
+          return;
+        }
         const res = await axios.post('http://localhost:5000/signup', {name, email,number, password, role})
         if(res.status==201){
             error();
@@ -120,7 +131,7 @@ const Signup = () => {
         console.log(password)
         console.log(name)
         console.log(role)
-        // navigate('/login')
+        navigate('/login')
     }
     return (
         <div className='login-signup-page'>
@@ -145,7 +156,7 @@ const Signup = () => {
                             },
                         ]}
                     >
-                        <Input placeholder='Enter your name' onChange={e=>setName(e.target.value.trim())} className='login-signup-input' />
+                        <Input placeholder='Enter your name' onChange={e=>setName(()=>e.target.value.trim())} className='login-signup-input' />
                     </Form.Item>
 
 
@@ -162,11 +173,11 @@ const Signup = () => {
                     </Form.Item>
 
 
-                    <Form.Item name={number}
+                    <Form.Item name="number"
                     initialValue={number}
                         
                     >
-                        <Input type='text' value={number} placeholder='Enter Phone Number' onChange={e=>handleNumber(e)} className='login-signup-input' />
+                        <Input type='text'  placeholder='Enter Phone Number' onChange={e=>handleNumber(e)} maxLength={10} className='login-signup-input' />
                     </Form.Item>
 
                     <Form.Item name="password"

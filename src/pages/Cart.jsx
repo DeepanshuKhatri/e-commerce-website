@@ -37,7 +37,7 @@ const Cart = () => {
     }
     run();
   }, []);
-  console.log(userAddress)
+  console.log(cartItems)
 
 
 
@@ -76,10 +76,10 @@ const Cart = () => {
     }
     setPrice(0);
     setDiscount(0);
-    cartItems.forEach(async (x)=>{
-      const updateStock = await axios.post("http://localhost:5000/placeOrder", {id:x.product_id, quantity:x.quantity})
-      console.log(updateStock.data);
-    })
+    // cartItems.forEach(async (x)=>{
+    //   const updateStock = await axios.post("http://localhost:5000/placeOrder", {id:x.product_id, quantity:x.quantity})
+    //   console.log(updateStock.data);
+    // })
 
 
     const res = await axios.post("http://localhost:5000/placeOrder", {cartItems: cartItems})

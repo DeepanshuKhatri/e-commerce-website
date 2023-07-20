@@ -67,14 +67,14 @@ const Home = () => {
     </Carousel>
     <Divider/>
       {/* <div className="best-selling"> */}
-        <h1 style={{"textAlign":"center"}}>Best Selling</h1>
+        {/* <h1 style={{"textAlign":"center"}}>Best Selling</h1> */}
       <ListingProducts page="home" products={bestSelling}/>
 
 
       {/* </div> */}
 
 
-      <h1>All Products</h1>
+      {/* <h1>All Products</h1> */}
 
 
       <ListingProducts page="home" products={filteredProducts}/>

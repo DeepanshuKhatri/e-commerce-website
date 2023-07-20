@@ -70,6 +70,9 @@ const Login = () => {
             else{
                 setIsModalOpen(true)
                 success('Successfully Logged In');
+                dispatch(addUser({
+                  name:data.name, email:data.email, role:data.role, number:data?.number, password:data?.password
+              }))
                 navigate('/')
           }
         
@@ -96,6 +99,7 @@ const Login = () => {
                 name, email, password, role, number
             }))
             setIsModalOpen(false);
+            
             navigate('/')
       };
 
@@ -120,7 +124,7 @@ const Login = () => {
                 // password:res.data.password
             }))
             // alert("Logged In Successfully")
-            success();
+            success("logged In Successfully");
             navigate('/')
         }
         console.log("Finish")

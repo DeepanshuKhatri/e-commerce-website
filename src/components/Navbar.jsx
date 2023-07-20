@@ -29,7 +29,7 @@ const Navbar = ({page, products, setShowCarousel, setFilteredProducts}) => {
   }
   function onClick(e) {
     console.log(e.key)
-    setFilteredProducts(products?.filter(x=>x.brand.includes(e.key)))
+    setFilteredProducts(products?.filter(x=>x.category[1].includes(e.key)))
     setShowCarousel(false)
 
   }

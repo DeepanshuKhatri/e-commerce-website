@@ -89,7 +89,7 @@ const ShowProduct = () => {
         {/* <h1 className="total-price-product-detail">Total Price:{price}</h1> */}
         </div>
         {/* <Divider/> */}
-        {location.state.item.vendor_email!== user.email  &&
+        {( location.state.item.vendor_email!== user.email && user.role!="admin") &&
         
         <>
         
